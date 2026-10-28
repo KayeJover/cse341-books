@@ -3,10 +3,6 @@ import express from 'express';
 import { getDb } from './src/db/connect.js';
 
 const app = express();
-app.use((req, res, next) => {
-    console.log('Incoming request:', req.method, req.url);
-    next();
-});
 
 app.use(express.json());
 
@@ -19,8 +15,6 @@ app.get('/', (req, res) => {
 
 // GET /books - Retrieve all books
 app.get('/books', async (req, res) => {
-    console.log('GET /books handler reached');
-
     try {
         const books = await getDb()
             .collection('books')
@@ -37,7 +31,7 @@ app.get('/books', async (req, res) => {
     }
 });
 
-// GET /books/:id - Retrieve one book by custom id
+// GET /books/:id - Retrieve one book by custom ID
 app.get('/books/:id', async (req, res) => {
     try {
         const book = await getDb()
@@ -59,12 +53,5 @@ app.get('/books/:id', async (req, res) => {
         });
     }
 });
-
-console.log(
-    'Registered routes:',
-    app.router.stack
-        .filter((layer) => layer.route)
-        .map((layer) => layer.route.path)
-);
 
 export default app;
