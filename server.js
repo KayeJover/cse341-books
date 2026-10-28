@@ -1,14 +1,24 @@
+import dns from 'node:dns';
+
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 import app from './app.js';
+console.log('Loaded app module from:', import.meta.resolve('./app.js'));
+console.log('App type:', typeof app);
+import { connectToDb } from './src/db/connect.js';
 
-const PORT = process.env.PORT;
+const PORT = 3001;
+const startServer = async () => {
+    try {
+        await connectToDb();
 
-if (!PORT) {
-    throw new Error(
-        'PORT is not defined. Make sure your .env file is being loaded.'
-    );
-}
+        app.listen(PORT, () => {
+            console.log(`Server listening on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Database connection failed:', error.message);
+        process.exit(1);
+    }
+};
 
-app.listen(PORT, () => {
-    console.log(`Server listening at 127.0.0.1:${PORT}`);
-});
+await startServer();
