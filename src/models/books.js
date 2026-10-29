@@ -9,3 +9,11 @@ export const getAllBooks = async () => {
 
     return books;
 };
+
+export const getBookById = async (id) => {
+    const book = await getDb()
+        .collection('books')
+        .findOne({ id });
+
+    return book;
+};
