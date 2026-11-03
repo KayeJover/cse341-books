@@ -19,7 +19,8 @@
         "dev": "nodemon --env-file=.env server.js",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "swagger": "node swagger.js"
     },
     "dependencies": {
         "express": "^5.2.1",
